@@ -75,6 +75,12 @@ class DebugLog(object):
     def on_game_individual_result(self, context):
         self.write_debug_log(sys._getframe().f_code.co_name, context)
 
+    def on_result_udemae(self, context):
+        self.write_debug_log(sys._getframe().f_code.co_name, context)
+
+    def on_game_session_end(self, context):
+        self.write_debug_log(sys._getframe().f_code.co_name, context)
+
     def __init__(self, dir='debug/', screenshot=False):
         self.dir = dir
         self.screenshot = screenshot

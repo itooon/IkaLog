@@ -25,7 +25,9 @@ import sys
 import time
 import traceback
 
+from ikalog.utils import *
 from . import scenes
+
 
 # The IkaLog core engine.
 #
@@ -35,6 +37,7 @@ class IkaEngine:
     scn_gamestart = scenes.GameStart()
     scn_gamefinish = scenes.GameFinish()
     scn_gameresult = scenes.ResultDetail()
+    scn_result_udemae = scenes.ResultUdemae()
     scn_ingame = scenes.InGame()
     scn_tower_tracker = scenes.TowerTracker()
     scn_lobby = scenes.Lobby()
@@ -102,7 +105,7 @@ class IkaEngine:
 
     def process_frame(self):
         context = self.context  # Python のオブジェクトって参照だよね?
-        frame = self.read_next_frame(skip_frames=12)
+        frame = self.read_next_frame(skip_frames=min(self.skip_frames_typical, self.skip_frames_requested))
         # FixMe: frame can be a null
 
         context['engine']['frame'] = frame
@@ -197,9 +200,34 @@ class IkaEngine:
 
                 self.call_plugins('on_game_individual_result_analyze')
                 self.call_plugins('on_game_individual_result')
-                self.call_plugins('on_game_reset')
 
-                self.reset()
+                # ナワバリバトルであればリセット
+                if IkaUtils.rule2text(context['game']['rule']) == 'ナワバリバトル':
+                    self.call_plugins('on_game_session_end')
+                    self.call_plugins('on_game_reset')
+                    self.reset()
+                #self.skip_frames_requested = 1
+
+        # ResultUdemae
+        r = (not context['engine']['inGame'])
+
+        if r:
+            r = self.scn_result_udemae.match(context)
+
+        if r:
+            print('IN: result_udemae')
+            while ('udemae_str' in context['scene']['result_udemae']):
+                frame = self.read_next_frame()
+                context['engine']['frame'] = frame
+                self.scn_result_udemae.match(context)
+                print('result_udemae loop')
+            print('OUT: result_udemae')
+            self.skip_frames_requested = 99
+
+            self.call_plugins('on_game_session_end')
+            self.call_plugins('on_game_reset')
+            self.reset()
+
 
         key = None
 
@@ -255,6 +283,8 @@ class IkaEngine:
         self._pause = pause
 
     def __init__(self):
+        self.skip_frames_typical = 12
+        self.skip_frames_requested = 99
         self._stop = False
         self._pause = True
         self.reset()
