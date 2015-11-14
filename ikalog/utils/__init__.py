@@ -18,12 +18,17 @@
 #  limitations under the License.
 #
 from __future__ import print_function
-
 from .ikautils import IkaUtils
 from .matcher import IkaMatcher
 from .glyph_recoginizer import IkaGlyphRecoginizer
+from .weapon_recoginizer.nin import NIN
+from .weapon_recoginizer.alex import Alex
+from .weapon_recoginizer.alexbn import AlexBN
+from .weapon_recoginizer.googlenet import GoogLeNet
+from .weapon_recoginizer.googlenetbn import GoogLeNetBN
+from .weapon_recoginizer.weapon_recoginizer import IkaWeaponRecoginizer
 from .character_recoginizer import CharacterRecoginizer
 from .character_recoginizer.number import NumberRecoginizer
 from .character_recoginizer.udemae import UdemaeRecoginizer
 from .character_recoginizer.fes_gender import FesGenderRecoginizer
-from .character_recoginizer.fes_level import FesLevelRecoginizer 
+from .character_recoginizer.fes_level import FesLevelRecoginizer

@@ -461,9 +461,18 @@ class ResultDetail(StatefulScene):
         self.fes_gender_recoginizer = character_recoginizer.FesGenderRecoginizer()
         self.fes_level_recoginizer = character_recoginizer.FesLevelRecoginizer()
 
-        self.weapons = IkaGlyphRecoginizer()
-        self.weapons.load_model_from_file("data/weapons.knn.data")
-        self.weapons.knn_train()
+        if False:
+            # kNN
+            self.weapons = IkaGlyphRecoginizer()
+            self.weapons.load_model_from_file("data/weapons.knn.data")
+            self.weapons.knn_train()
+        else:
+            # dnn
+            self.weapons = IkaWeaponRecoginizer()
+            self.weapons.load_model()
+            # dnn by GPU
+            #self.weapons.load_model(gpu=0)
+
 
 
 if __name__ == "__main__":
