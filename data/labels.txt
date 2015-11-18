@@ -1,4 +1,4 @@
-bun_rui_zumi_en_17000.rev2
+bun_rui_zumi_en_17000.rev3
 rapid_elite
 52gal
 bucketslosher
@@ -6,6 +6,7 @@ hotblaster_custom
 pablo
 nzap85
 hissen
+bamboo14mk2
 nzap89
 heroshooter_replica
 splatscope
@@ -22,8 +23,10 @@ hokusai
 sshooter
 pablo_hue
 nova
+h3reelgun_d
 longblaster
 96gal
+nova_neo
 dualsweeper
 splatcharger
 splatscope_wakame
@@ -40,9 +43,11 @@ liter3k_scope
 rapid_deco
 prime
 96gal_deco
+bold_neo
 carbon_deco
 hotblaster
 sshooter_collabo
+barrelspinner_deco
 bamboo14mk1
 octoshooter_replica
 squiclean_b
